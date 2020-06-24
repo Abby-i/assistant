@@ -17,6 +17,7 @@ import SysRecruitList from '../components/SysRecruitList'
 import Register from '../components/Register'
 import AssRequireList from '../components/AssRequireList'
 import AssJobList from '../components/AssJobList'
+import SysHireList from '../components/SysHireList'
 
 Vue.use(Router)
 
@@ -81,6 +82,10 @@ export default new Router({
         {
           path: '/sysView', // 面试名单（系统用户）
           component: SysViewList
+        },
+        {
+          path: '/sysHireList', // 录用名单（系统用户）
+          component: SysHireList
         },
         {
           path: '/sysRecruit', // 招聘信息详情（系统用户）

@@ -8,12 +8,15 @@
 <script>
 
 export default {
-  name: 'App'
+  name: 'App',
+  saveState () {
+    sessionStorage.setItem('state', JSON.stringify(this.$store.state))
+  }
 }
 </script>
 
 <style>
 .el-dialog{
-  background: #FDF5E6 !important;
+  background: #eef1f9 !important;
 }
 </style>

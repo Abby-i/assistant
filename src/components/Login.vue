@@ -6,10 +6,10 @@
         </div>
         <el-form label-width="100px" class="login_form">
           <el-form-item>
-            <el-input prefix-icon="iconfont icon-zhanghu" v-model="username" placeholder="请输入用户名"  ></el-input>
+            <el-input prefix-icon="iconfont icon-zhanghu" v-model="loginForm.username" placeholder="请输入用户名"  ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-input prefix-icon="iconfont icon-mima" v-model="password" placeholder="请输入密码"></el-input>
+            <el-input  type="password" prefix-icon="iconfont icon-mima" v-model="loginForm.password" placeholder="请输入密码"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" class="login_button" @click="login">登录</el-button>
@@ -20,16 +20,40 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
+
 export default {
   data () {
     return {
-      username: '',
-      password: ''
+      loginForm: {
+        username: '',
+        password: ''
+      }
     }
   },
   methods: {
-    login () {
-      this.$router.replace('/main')
+    login () { // 登录方法
+      const _this = this
+      axios.post(`http://localhost:8181/login`, this.loginForm).then(function (resp) {
+        console.log(resp.data.code === 500)
+        if (resp.data.code === 0) {
+          _this.$notify({
+            title: '登入成功',
+            message: '登入成功',
+            type: 'success'
+          })
+          // 登入成功将用户消息保存(以便根据角色显示数据库)
+          _this.$store.commit('ACCOUNTS', resp.data.user)
+          localStorage.setItem('user', JSON.stringify(resp.data.user))
+          _this.$router.replace('/main')
+        } else if (resp.data.code === 500) {
+          _this.$notify.error({
+            title: '登入失败',
+            message: resp.data.msg
+          })
+          console.log('error')
+        }
+      })
     },
     register () {
       this.$router.replace('/register')

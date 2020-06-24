@@ -3,7 +3,6 @@
   <div class="list_title">
     <el-input v-model="input" placeholder="请输入内容"></el-input>
     <el-button type="info" @click="getData" round>查询</el-button>
-    <el-button type="warning" @click="recruitDelete" round>删除</el-button>
     <template>
       <el-table
         :data="tableData"
@@ -11,58 +10,40 @@
         style="width: 100%; margin-top: 30px"
         @selection-change="handleSelectionChange">
         <el-table-column
-          type="selection"
-          width="55">
+          type="selection">
         </el-table-column>
         <el-table-column
           fixed="left"
           prop="labId"
-          label="所属实验室"
-          width="150">
+          label="所属实验室">
         </el-table-column>
         <el-table-column
           prop="stuId"
-          label="学生学号"
-          width="150">
+          label="学生学号">
         </el-table-column>
         <el-table-column
           prop="stuName"
-          label="学生姓名"
-          width="150">
+          label="学生姓名">
         </el-table-column>
         <el-table-column
           prop="major"
-          label="专业"
-          width="150">
+          label="专业">
         </el-table-column>
         <el-table-column
           prop="grade"
-          label="年级"
-          width="150">
+          label="年级">
         </el-table-column>
         <el-table-column
           prop="className"
-          label="班级"
-          width="150">
+          label="班级">
         </el-table-column>
         <el-table-column
           prop="telephone"
-          label="电话"
-          width="150">
+          label="电话">
         </el-table-column>
         <el-table-column
           prop="email"
-          label="邮箱"
-          width="150">
-        </el-table-column>
-        <el-table-column
-          fixed="right"
-          label="操作"
-          width="120">
-          <template slot-scope="scope">
-            <el-button type="text" size="small">查看</el-button>
-            <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
-          </template>
+          label="邮箱">
         </el-table-column>
       </el-table>
       <el-pagination
@@ -73,49 +54,7 @@
         @current-change="page">
       </el-pagination>
     </template>
-    <el-dialog
-      title="编辑助理信息"
-      :visible.sync="list_updateDialog"
-      width="50%">
-        <span>
-          <div>
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" >
-              <el-form-item label="所属实验室" prop="labId">
-                <el-input v-model="ruleForm.labId"></el-input>
-              </el-form-item>
-              <el-form-item label="学生学号" prop="stuId">
-                <el-input v-model="ruleForm.stuId"></el-input>
-              </el-form-item>
-              <el-form-item label="学生姓名" prop="stuName">
-                <el-input v-model="ruleForm.stuName"></el-input>
-              </el-form-item>
-              <el-form-item label="专业" prop="major">
-                <el-input v-model="ruleForm.major"></el-input>
-              </el-form-item>
-              <el-form-item label="年级" prop="grade">
-                <el-input v-model="ruleForm.grade"></el-input>
-              </el-form-item>
-              <el-form-item label="班级" prop="className">
-                <el-input v-model="ruleForm.className"></el-input>
-              </el-form-item>
-              <el-form-item label="电话" prop="telephone">
-                <el-input v-model="ruleForm.telephone"></el-input>
-              </el-form-item>
-              <el-form-item label="邮箱" prop="email">
-                <el-input v-model="ruleForm.email"></el-input>
-              </el-form-item>
-               <el-form-item label="个人照片" prop="photo">
-                <el-input v-model="ruleForm.photo"></el-input>
-              </el-form-item>
-            </el-form>
-          </div>
-        </span>
-      <span slot="footer" class="dialog-footer">
-    <el-button @click="list_updateDialog = false">取 消</el-button>
-          <el-button type="primary" @click="resetForm('ruleForm')">重 置</el-button>
-    <el-button type="success" @click="updateSubmitForm('ruleForm')">确 定</el-button>
-  </span>
-    </el-dialog>
+
   </div>
 </template>
 <script>
@@ -191,7 +130,7 @@ export default {
       // 获取当前登入用户的id
       let account = JSON.parse(localStorage.getItem('user'))
       console.log(account)
-      const url = `http://localhost:8181/assistant/findByLabId/1/6/` + account.username
+      const url = `http://localhost:8181/assistant/findByStuId/1/6/` + account.username
       axios.get(url).then(resp => {
         console.log(resp.data)
         _this.tableData = resp.data.content

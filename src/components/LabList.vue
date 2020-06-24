@@ -2,7 +2,7 @@
 <template>
   <div class="list_title">
     <el-input v-model="input" placeholder="请输入内容"></el-input>
-    <el-button type="info" round>查询</el-button>
+    <el-button type="info" round @click="getData">查询</el-button>
     <el-button type="success" round @click="list_addDialog=true">添加</el-button>
     <el-button type="warning" round>删除</el-button>
     <template>
@@ -12,36 +12,30 @@
         style="width: 100%; margin-top: 30px">
         @selection-change="handleSelectionChange">
         <el-table-column
-          type="selection"
-          width="55">
+          type="selection">
         </el-table-column>
         <el-table-column
           prop="labId"
-          label="实验室编号"
-          width="150">
+          label="实验室编号">
         </el-table-column>
         <el-table-column
           prop="labName"
-          label="实验室名称"
-          width="150">
+          label="实验室名称">
         </el-table-column>
         <el-table-column
           prop="artisanId"
-          label="管理员编号"
-          width="150">
+          label="管理员编号">
         </el-table-column>
         <el-table-column
           prop="depId"
-          label="所属部门"
-          width="150">
+          label="所属部门">
         </el-table-column>
         <el-table-column
           fixed="right"
-          label="操作"
-          width="120">
+          label="操作">
           <template slot-scope="scope">
             <el-button type="text" size="small">查看</el-button>
-            <el-button type="text" size="small" @click="list_updateDialog=true">编辑</el-button>
+            <el-button type="text" size="small" @click="list_updateDialog=true" style="color: red">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
