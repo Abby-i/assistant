@@ -17,14 +17,18 @@
           </el-form-item>
         </el-form>
       </div>
+      <div>
+        <Register v-if="registerVisible" ref="Register"></Register>
+      </div>
     </div>
 </template>
 <script>
 import axios from 'axios'
-
+import Register from './Register'
 export default {
   data () {
     return {
+      registerVisible: true,
       loginForm: {
         username: '',
         password: ''
@@ -56,8 +60,16 @@ export default {
       })
     },
     register () {
-      this.$router.replace('/register')
+      // this.$router.replace('/register')
+      console.log('===========================')
+      this.registerVisible = true
+      this.$nextTick(() => {
+        this.$refs.Register.init()
+      })
     }
+  },
+  components: {
+    Register
   }
 }
 </script>

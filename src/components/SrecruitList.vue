@@ -1,9 +1,8 @@
-<!--填写招聘信息（技术员）-->
+<!--填写招聘信息（学生工作处）-->
 <template>
   <div class="list_title">
     <el-input v-model="input" placeholder="请输入内容"></el-input>
     <el-button type="info" round @click="getData">查询</el-button>
-    <el-button type="success" round @click="list_addDialog=true">添加</el-button>
     <el-button type="warning" round @click="recruitDelete">删除</el-button>
     <template>
       <el-table
@@ -47,8 +46,7 @@
           prop="issueStatus"
           label="审核/发布状态">
           <template slot-scope="scope">
-            <span  v-if="scope.row.issueStatus==='0'" >未审核</span>
-            <span v-if="scope.row.issueStatus==='1'">审核中</span>
+            <span v-if="scope.row.issueStatus==='1'">未审核</span>
             <span v-if="scope.row.issueStatus==='2'">已审核</span>
           </template>
         </el-table-column>
@@ -56,9 +54,8 @@
           fixed="right"
           label="操作">
           <template slot-scope="scope">
-            <el-button type="success" v-if="scope.row.issueStatus === '2'" plain @click="apply(scope.row)">已审核</el-button>
-            <el-button type="success" v-if="scope.row.issueStatus === '1'" plain @click="apply(scope.row)">已提交</el-button>
-            <el-button type="primary" v-if="scope.row.issueStatus === '0'" plain @click="apply(scope.row)">提交审核</el-button>
+            <el-button type="primary" v-if="scope.row.issueStatus === '2'" plain @click="apply(scope.row)">已审核</el-button>
+            <el-button type="success" v-if="scope.row.issueStatus === '1'" plain @click="apply(scope.row)">未审核</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -244,7 +241,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // 直接传入封装数据
-          axios.put(`http://localhost:8181/recruit/update`, this.ruleForm).then(function (resp) {
+          axios.put(`http://localhost:8181/recruit/updateStatus`, this.ruleForm).then(function (resp) {
             if (resp.data === 'success') {
               _this.$notify({
                 title: '成功',
@@ -271,7 +268,7 @@ export default {
       // 获取当前登入用户的id
       let account = JSON.parse(localStorage.getItem('user'))
       console.log(account)
-      const url = `http://localhost:8181/recruit/findByLabId/1/6/` + account.username
+      const url = `http://localhost:8181/recruit/findAll/1/6/` + '?status=' + 1
       axios.get(url).then(resp => {
         console.log(resp.data)
         _this.tableData = resp.data.content
@@ -281,7 +278,7 @@ export default {
     // 分页
     page (currentPage) {
       const _this = this
-      axios.get(`http://localhost:8181/recruit/findByLabId/` + currentPage + `/6`).then(resp => {
+      axios.get(`http://localhost:8181/recruit/findAll/` + currentPage + `/6`).then(resp => {
         _this.tableData = resp.data.content
         _this.total = Number(resp.data.totalElements)
       })
@@ -352,7 +349,7 @@ export default {
     apply (value) {
       axios.post(`http://localhost:8181/recruit/apply`, {
         'id': value.id,
-        'status': 1
+        'status': 2
       }).then(function (response) {
         this.$notify({
           title: '成功',

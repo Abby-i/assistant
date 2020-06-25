@@ -1,7 +1,7 @@
 <template>
-  <el-container class="main_container">
+  <el-container class="main_container" >
     <!--头部区域-->
-    <el-header style="height: 80px">
+    <el-header style="height: 80px;  background-color: #242424" >
       <div>
         <img id="img" src="../assets/logo.jpg" alt=""  style="height: 50px ;width: 50px">
         <span>实验室助理工作系统</span>
@@ -24,18 +24,18 @@
           </div>
           <!--一级菜单--><!--超级管理员-->
           <el-submenu index="1" v-if="this.account.user_type === 'E' ">
-            <!--一级菜单模板区域-->
+          <!--一级菜单模板区域-->
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span>部门管理</span>
+          </template>
+          <el-menu-item-group>
             <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>部门管理</span>
-            </template>
-            <el-menu-item-group>
-              <template slot="title">
-                <i class="el-icon-document"></i>
+              <i class="el-icon-document"></i>
               <router-link  to="/list" >部门详情</router-link>
-              </template>
-            </el-menu-item-group>
-          </el-submenu>
+            </template>
+          </el-menu-item-group>
+        </el-submenu>
           <!--实验技术员-->
           <el-submenu index="2" v-if="this.account.user_type === 'B' ">
             <template slot="title">
@@ -96,17 +96,27 @@
 
           <!--部门-->
           <el-submenu index="5" v-if="this.account.user_type === 'D'">
-            <template slot="title">
+            <template slot="title" v-if="this.account.dep_id !== 'S1'">
               <i class="el-icon-location"></i>
               <span>专业技术实验室</span>
             </template>
-            <el-menu-item-group>
+            <template slot="title" v-if="this.account.dep_id === 'S1'">
+              <i class="el-icon-location"></i>
+              <span>审核招聘信息</span>
+            </template>
+            <el-menu-item-group v-if="this.account.dep_id === 'S1'">
+              <template slot="title">
+                <i class="el-icon-document"></i>
+                <router-link to="/sRecruitList" >招聘信息列表</router-link>
+              </template>
+            </el-menu-item-group>
+            <el-menu-item-group v-if="this.account.dep_id !== 'S1'">
               <template slot="title">
                 <i class="el-icon-document"></i>
                 <router-link to="/lab" >实验室详情</router-link>
               </template>
             </el-menu-item-group>
-            <el-menu-item-group>
+            <el-menu-item-group v-if="this.account.dep_id !== 'S1'">
               <template slot="title">
                 <i class="el-icon-document"></i>
                 <router-link to="/artisan">技术人员详情</router-link>

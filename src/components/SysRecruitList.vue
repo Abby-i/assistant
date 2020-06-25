@@ -168,7 +168,7 @@ export default {
       // 获取当前登入用户的id
       let account = JSON.parse(localStorage.getItem('user'))
       console.log(account)
-      const url = `http://localhost:8181/recruit/findAll/1/6`
+      const url = `http://localhost:8181/recruit/findAll/1/6` + '?status=' + 2
       axios.get(url).then(resp => {
         console.log(resp.data)
         _this.tableData = resp.data.content

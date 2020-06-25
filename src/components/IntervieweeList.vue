@@ -11,49 +11,44 @@
         style="width: 100%; margin-top: 30px"
         @selection-change="handleSelectionChange">
         <el-table-column
-          type="selection"
-          width="55">
+          type="selection">
         </el-table-column>
         <el-table-column
           fixed="left"
           prop="recruit_id"
-          label="招聘计划编号"
-          width="150">
+          label="招聘计划编号">
         </el-table-column>
         <el-table-column
           prop="recruit_name"
-          label="计划名称"
-          width="150">
+          label="计划名称">
         </el-table-column>
         <el-table-column
           prop="applyId"
-          label="报名编号"
-          width="150">
+          label="报名编号">
         </el-table-column>
         <el-table-column
           prop="stuName"
-          label="学生姓名"
-          width="150">
+          label="学生姓名">
         </el-table-column>
         <el-table-column
           prop="stuId"
-          label="学生学号"
-          width="150">
+          label="学生学号">
         </el-table-column>
         <el-table-column
           prop="skill"
-          label="技能描述"
-          width="150">
+          label="技能描述">
         </el-table-column>
         <el-table-column
           prop="applyTime"
-          label="报名时间"
-          width="150">
+          label="报名时间">
         </el-table-column>
         <el-table-column
           prop="viewStatus"
-          label="面试情况"
-          width="150">
+          label="面试情况">
+          <template slot-scope="scope">
+            <span v-if="scope.row.viewStatus==='1'">未录用</span>
+            <span v-if="scope.row.viewStatus==='2'">已录用</span>
+          </template>
         </el-table-column>
         <el-table-column
           fixed="right"
@@ -85,7 +80,22 @@ export default {
     }
   },
   methods: {
-    employed (row) {
+    // 发送post请求
+    employed (value) {
+      axios.post(`http://localhost:8181/apply/apply`, {
+        'id': value.id,
+        'status': 2
+      }).then(function (response) {
+        this.$notify({
+          title: '成功',
+          message: '成功录用',
+          type: 'success'
+        })
+        console.log(response)
+      })
+      this.getData()
+    },
+    /*  employed (row) {
       const _this = this
       axios.get(`http://localhost:8181/recruit/findById/` + row.id).then(function (resp) {
         _this.ruleForm = resp.data
@@ -93,7 +103,7 @@ export default {
       })
       this.list_updateDialog = true
       _this.getData()
-    },
+    }, */
     // 列表显示
     getData () {
       const _this = this

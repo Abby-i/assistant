@@ -82,11 +82,12 @@
     title="导出维修表"
     :visible.sync="list_updateDialog"
     width="70%">
-    <span>
+    <div id="printTarget">
+         <span>
        <table class="tableDialog" border cellspacing= 0 >
       <tr>
          <td align="right">维修表编号：</td>
-        <td><input type="text" name="repairId"  v-model="ruleForm.repairId"></td>
+        <td><input type="text" name="repairId"  v-model="ruleForm.repairId" ></td>
         <td align="right">设备名称：</td>
         <td><input type="text" name="equipName"  v-model="ruleForm.equipName"></td>
         <td align="right">设备型号：</td>
@@ -110,9 +111,10 @@
       </tr>
        </table>
     </span>
+    </div>
     <span slot="footer" class="dialog-footer">
-    <el-button @click="list_updateDialog = false">取 消</el-button>
-    <el-button type="primary" @click="list_updateDialog = false">导出</el-button>
+    <el-button type="success" @click="list_updateDialog = false">取 消</el-button>
+    <el-button type="primary" @click="list_updateDialog = false"  v-print="'#printTarget'">导出</el-button>
   </span>
   </el-dialog>
   </div>

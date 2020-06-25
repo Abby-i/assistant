@@ -8,11 +8,10 @@ import router from './router'
 import './css/global.css'
 // 导入字体图标
 import './assets/fonts/iconfont.css'
-
+import Print from 'vue-print-nb'
 import store from './store/modules/store'// 所有组件对象都多了一个属性：$store
-
 Vue.use(Element)
-
+Vue.use(Print)
 /* eslint-disable no-new */
 new Vue({
   router,

@@ -18,6 +18,7 @@ import Register from '../components/Register'
 import AssRequireList from '../components/AssRequireList'
 import AssJobList from '../components/AssJobList'
 import SysHireList from '../components/SysHireList'
+import SrecruitList from '../components/SrecruitList'
 
 Vue.use(Router)
 
@@ -98,6 +99,10 @@ export default new Router({
         {
           path: '/assJobList', // 维修表填写（实验室助理）
           component: AssJobList
+        },
+        {
+          path: '/sRecruitList', // 维修表填写（实验室助理）
+          component: SrecruitList
         }
       ]
     }
